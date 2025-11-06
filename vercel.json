@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npm run build -- --filter=@college-erp/web...",
+  "installCommand": "npm install",
+  "builds": [
+    {
+      "src": "apps/web/next.config.mjs",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/web/$1"
+    }
+  ]
+}
