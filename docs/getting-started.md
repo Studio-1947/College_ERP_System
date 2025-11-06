@@ -22,10 +22,11 @@ To run the Next.js app explicitly:
 npm run dev --workspace=@college-erp/web
 ```
 
-To run the API service:
-```bash
-npm run start:dev --workspace=@college-erp/api
-```
+### Backend (API Service)
+- Copy environment template: `cp services/api/.env.example services/api/.env`
+- Generate Prisma client: `npm run prisma:generate --workspace=@college-erp/api`
+- Launch API locally: `npm run start:dev --workspace=@college-erp/api`
+- Run e2e tests: `npm run test:e2e --workspace=@college-erp/api`
 
 ## Workspace Layout
 ```
@@ -49,3 +50,4 @@ tooling/        # Shared linting/tsconfig presets (to be expanded)
 1. Verify dependency installation (no unmet peer deps).
 2. Flesh out Storybook setup in `packages/ui`.
 3. Define OpenAPI schema for backend and generate typed clients in `packages/utils`.
+4. Add Prisma migrations for admissions/student modules and expand domain coverage.
