@@ -8,7 +8,9 @@ const preset: Partial<Config> = {
       colors: tokens.colors,
       spacing: tokens.spacing,
       borderRadius: tokens.radii,
-      fontFamily: tokens.fontFamily,
+      fontFamily: {
+        sans: [...tokens.fontFamily.sans]
+      },
       boxShadow: tokens.shadows
     }
   },

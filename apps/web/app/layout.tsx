@@ -1,6 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 
@@ -15,7 +15,7 @@ interface RootLayoutProps {
   children: ReactNode;
 }
 
-const navigation = [
+const navigation: Array<{ href: Route; label: string }> = [
   { href: "/", label: "Home" },
   { href: "/portal", label: "ERP Portal" },
   { href: "/student", label: "Student Portal" },

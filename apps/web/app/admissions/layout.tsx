@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
+import type { Route } from "next";
 import Link from "next/link";
 import { AppShell } from "@college-erp/ui";
 
-const navigation = [
+const navigation: Array<{ href: Route; label: string; comingSoon?: boolean }> = [
   { href: "/admissions", label: "Dashboard" },
   { href: "/admissions/applicants", label: "Applicants", comingSoon: true },
   { href: "/admissions/verification", label: "Verification", comingSoon: true },
