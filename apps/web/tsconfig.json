@@ -1,0 +1,42 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@college-erp/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@college-erp/config/*": [
+        "../../packages/config/src/*"
+      ],
+      "@college-erp/hooks/*": [
+        "../../packages/hooks/src/*"
+      ],
+      "@college-erp/utils/*": [
+        "../../packages/utils/src/*"
+      ]
+    },
+    "types": [
+      "next",
+      "next/types/global",
+      "next/navigation-types/compat/navigation",
+      "node"
+    ],
+    "incremental": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

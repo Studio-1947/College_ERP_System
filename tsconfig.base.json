@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["DOM", "DOM.Iterable", "ES2021"],
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "allowJs": false,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@college-erp/ui/*": ["packages/ui/src/*"],
+      "@college-erp/config/*": ["packages/config/src/*"],
+      "@college-erp/hooks/*": ["packages/hooks/src/*"],
+      "@college-erp/utils/*": ["packages/utils/src/*"]
+    }
+  }
+}

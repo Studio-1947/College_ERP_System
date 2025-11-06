@@ -1,0 +1,31 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules
+/pnpm-lock.yaml
+
+# Build outputs
+.next
+out
+dist
+build
+
+# Testing
+coverage
+
+# IDE
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# Temp
+*.swp
+*.swo
+
