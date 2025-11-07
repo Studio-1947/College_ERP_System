@@ -3,11 +3,11 @@ import type { Route } from "next";
 import Link from "next/link";
 import { AppShell } from "@college-erp/ui";
 
-const navigation: Array<{ href: Route; label: string; comingSoon?: boolean }> = [
+const navigation: Array<{ href: Route; label: string }> = [
   { href: "/student", label: "Dashboard" },
-  { href: "/student/courses", label: "Courses", comingSoon: true },
-  { href: "/student/notices", label: "Notices & Circulars", comingSoon: true },
-  { href: "/student/results", label: "Results", comingSoon: true }
+  { href: "/student/courses", label: "Courses" },
+  { href: "/student/notices", label: "Notices & Circulars" },
+  { href: "/student/results", label: "Results" }
 ];
 
 interface StudentLayoutProps {
@@ -42,11 +42,6 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
               className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-primary-50 hover:text-primary-700 focus-visible:outline focus-visible:outline-primary-300"
             >
               <span>{item.label}</span>
-              {item.comingSoon ? (
-                <span className="text-xs font-medium uppercase tracking-wide text-primary-400">
-                  Soon
-                </span>
-              ) : null}
             </Link>
           ))}
         </nav>

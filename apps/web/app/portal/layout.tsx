@@ -3,11 +3,11 @@ import type { Route } from "next";
 import Link from "next/link";
 import { AppShell } from "@college-erp/ui";
 
-const navigation: Array<{ href: Route; label: string; comingSoon?: boolean }> = [
+const navigation: Array<{ href: Route; label: string }> = [
   { href: "/portal", label: "Overview" },
-  { href: "/portal/students", label: "Student Information", comingSoon: true },
-  { href: "/portal/finance", label: "Finance & Fees", comingSoon: true },
-  { href: "/portal/hr", label: "HR & Payroll", comingSoon: true }
+  { href: "/portal/students", label: "Student Information" },
+  { href: "/portal/finance", label: "Finance & Fees" },
+  { href: "/portal/hr", label: "HR & Payroll" }
 ];
 
 interface PortalLayoutProps {
@@ -42,11 +42,6 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
               className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-primary-50 hover:text-primary-700 focus-visible:outline focus-visible:outline-primary-300"
             >
               <span>{item.label}</span>
-              {item.comingSoon ? (
-                <span className="text-xs font-medium uppercase tracking-wide text-primary-400">
-                  Soon
-                </span>
-              ) : null}
             </Link>
           ))}
         </nav>
