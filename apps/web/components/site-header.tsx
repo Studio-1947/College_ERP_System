@@ -1,9 +1,10 @@
 "use client";
 
+import clsx from "clsx";
 import Link from "next/link";
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const navigation: Array<{ href: Route; label: string }> = [
   { href: "/", label: "Home" },
@@ -15,10 +16,54 @@ const navigation: Array<{ href: Route; label: string }> = [
 export function SiteHeader() {
   const pathname = usePathname() ?? "/";
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const el = drawerRef.current;
+    if (!el) return;
+
+    const handleTransitionEnd = (event: TransitionEvent) => {
+      if (event.propertyName !== "height") return;
+      if (isMobileOpen) {
+        el.style.height = "auto";
+      }
+    };
+
+    el.addEventListener("transitionend", handleTransitionEnd);
+    return () => el.removeEventListener("transitionend", handleTransitionEnd);
+  }, [isMobileOpen]);
+
+  useEffect(() => {
+    const el = drawerRef.current;
+    if (!el) return;
+
+    if (isMobileOpen) {
+      const scrollHeight = el.scrollHeight;
+      el.style.height = "0px";
+      el.style.opacity = "0";
+      el.style.pointerEvents = "none";
+
+      requestAnimationFrame(() => {
+        el.style.height = `${scrollHeight}px`;
+        el.style.opacity = "1";
+        el.style.pointerEvents = "auto";
+      });
+    } else {
+      const scrollHeight = el.scrollHeight;
+      if (el.style.height === "auto" || el.style.height === "") {
+        el.style.height = `${scrollHeight}px`;
+      }
+      requestAnimationFrame(() => {
+        el.style.height = "0px";
+        el.style.opacity = "0";
+        el.style.pointerEvents = "none";
+      });
+    }
+  }, [isMobileOpen]);
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -75,28 +120,31 @@ export function SiteHeader() {
           </svg>
         </button>
       </div>
-      {isMobileOpen ? (
-        <div className="border-t border-surface-100 bg-white shadow-sm sm:hidden">
-          <div className="mx-auto max-w-6xl px-4 py-3">
-            <nav className="flex flex-col gap-1 text-sm font-medium">
-              {navigation.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-md px-3 py-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-300 ${
-                    isActive(item.href)
-                      ? "bg-primary-50 text-primary-700"
-                      : "text-surface-600 hover:bg-primary-50 hover:text-primary-700"
-                  }`}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
+      <div
+        ref={drawerRef}
+        className="border-t border-surface-100 bg-white shadow-sm transition-[height,opacity] duration-200 ease-out sm:hidden"
+        style={{ height: 0, opacity: 0, pointerEvents: "none", overflow: "hidden" }}
+        aria-hidden={!isMobileOpen}
+      >
+        <div className="mx-auto max-w-6xl px-4 py-3">
+          <nav className="flex flex-col gap-1 text-sm font-medium">
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`rounded-md px-3 py-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-300 ${
+                  isActive(item.href)
+                    ? "bg-primary-50 text-primary-700"
+                    : "text-surface-600 hover:bg-primary-50 hover:text-primary-700"
+                }`}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-      ) : null}
+      </div>
     </header>
   );
 }
