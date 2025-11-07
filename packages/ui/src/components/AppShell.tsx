@@ -79,7 +79,17 @@ export function AppShell({ sidebar, header, children, className }: AppShellProps
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto">{sidebar}</div>
+              <div
+                className="flex-1 overflow-y-auto"
+                onClick={(event) => {
+                  const target = event.target as HTMLElement;
+                  if (target?.closest("[data-close-mobile-sidebar]")) {
+                    setMobileSidebarOpen(false);
+                  }
+                }}
+              >
+                {sidebar}
+              </div>
             </aside>
           </>
         ) : null}

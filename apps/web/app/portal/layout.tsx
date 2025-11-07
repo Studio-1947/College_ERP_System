@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { Route } from "next";
 import Link from "next/link";
 import { AppShell } from "@college-erp/ui";
+import { SidebarNav } from "../../components/sidebar-nav";
 
 const navigation: Array<{ href: Route; label: string }> = [
   { href: "/portal", label: "Overview" },
@@ -33,19 +34,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
           </Link>
         </div>
       }
-      sidebar={
-        <nav className="flex flex-col gap-1 p-4 text-sm text-surface-600">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-primary-50 hover:text-primary-700 focus-visible:outline focus-visible:outline-primary-300"
-            >
-              <span>{item.label}</span>
-            </Link>
-          ))}
-        </nav>
-      }
+      sidebar={<SidebarNav items={navigation} />}
     >
       {children}
     </AppShell>
