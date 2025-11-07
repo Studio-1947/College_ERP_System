@@ -18,8 +18,8 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
   return (
     <AppShell
       header={
-        <div className="flex items-center justify-between px-6 py-4">
-          <div>
+        <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
             <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
               Student Portal
             </p>
@@ -27,7 +27,7 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
           </div>
           <Link
             href="/"
-            className="text-sm font-medium text-primary-600 hover:text-primary-700 focus-visible:outline focus-visible:outline-primary-300"
+            className="inline-flex items-center justify-center self-start rounded-md border border-primary-200 px-4 py-2 text-sm font-medium text-primary-600 transition hover:border-primary-400 hover:bg-primary-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-300 sm:self-auto"
           >
             Back to site
           </Link>
