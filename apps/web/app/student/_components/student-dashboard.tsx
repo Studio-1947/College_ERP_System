@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { Modal } from "../../../components/modal";
+import { Reveal } from "../../../components/reveal";
 
 type ModalState = {
   title: string;
@@ -68,7 +69,7 @@ export function StudentDashboard() {
   return (
     <>
       <section className="flex flex-col gap-8">
-        <header className="space-y-3">
+        <Reveal as="header" className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
             Student workspace
           </p>
@@ -77,20 +78,23 @@ export function StudentDashboard() {
             Review your schedule, coursework, notices, and performance snapshots. This baseline UI uses
             mocked data but mirrors the workflows that will connect to live services.
           </p>
-        </header>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Reveal as="section" className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {highlights.map((item) => (
-            <article key={item.label} className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm">
+            <article
+              key={item.label}
+              className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
               <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">{item.label}</p>
               <p className="mt-3 text-2xl font-semibold text-surface-900">{item.value}</p>
               <p className="mt-1 text-xs text-surface-500">{item.detail}</p>
             </article>
           ))}
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm lg:col-span-2">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Today&apos;s Timetable</h3>
@@ -98,7 +102,7 @@ export function StudentDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Download timetable",
@@ -119,7 +123,10 @@ export function StudentDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {timetable.map((slot) => (
-                <li key={slot.course} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={slot.course}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-wide text-primary-600">
@@ -135,7 +142,7 @@ export function StudentDashboard() {
             </ul>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Assignments</h3>
@@ -143,7 +150,7 @@ export function StudentDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Assignment planner",
@@ -169,7 +176,10 @@ export function StudentDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {assignments.map((task) => (
-                <li key={task.title} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={task.title}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-semibold text-surface-900">{task.title}</p>
@@ -182,10 +192,10 @@ export function StudentDashboard() {
               ))}
             </ul>
           </article>
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Notices & Circulars</h3>
@@ -193,7 +203,7 @@ export function StudentDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Inbox preview",
@@ -220,7 +230,7 @@ export function StudentDashboard() {
                   key={filter}
                   type="button"
                   onClick={() => setNoticeFilter(filter)}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                     noticeFilter === filter
                       ? "bg-primary-50 text-primary-700"
                       : "bg-surface-100 text-surface-600 hover:bg-surface-200"
@@ -232,7 +242,10 @@ export function StudentDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {filteredNotices.map((notice) => (
-                <li key={notice.title} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={notice.title}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="font-semibold text-surface-900">{notice.title}</p>
                   <p className="text-sm text-surface-600">{notice.dept}</p>
                   <p className="mt-1 text-xs text-surface-500">{notice.time}</p>
@@ -241,7 +254,7 @@ export function StudentDashboard() {
             </ul>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Results Snapshot</h3>
@@ -264,7 +277,7 @@ export function StudentDashboard() {
                       </thead>
                       <tbody className="divide-y divide-surface-100">
                         {results.map((term) => (
-                          <tr key={term.term}>
+                          <tr key={term.term} className="transition-colors duration-200 hover:bg-surface-50">
                             <td className="py-2 font-semibold text-surface-900">{term.term}</td>
                             <td className="py-2 text-primary-700">{term.gpa}</td>
                             <td className="py-2 text-surface-600">{term.credits}</td>
@@ -280,7 +293,10 @@ export function StudentDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {results.map((term) => (
-                <li key={term.term} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={term.term}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">
                     {term.term}
                   </p>
@@ -370,14 +386,14 @@ export function StudentDashboard() {
                 >
                   View responses
                 </button>
-                <div className="rounded-lg border border-surface-100 p-4">
+                <div className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200">
                   <p className="text-sm font-medium text-surface-900">Knowledge base</p>
                   <p className="text-xs text-surface-500">Popular answers surfaced automatically</p>
                 </div>
               </div>
             </div>
           </article>
-        </section>
+        </Reveal>
       </section>
 
       <Modal

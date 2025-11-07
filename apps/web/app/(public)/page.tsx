@@ -1,9 +1,129 @@
 import Link from "next/link";
+import { ThemePreview } from "../../components/home/theme-preview";
+import { PersonaTabs } from "../../components/home/persona-tabs";
+import { Reveal } from "../../components/reveal";
+
+const stats = [
+  { label: "Campuses Onboarded", value: "42+", detail: "Autonomous & multi-campus groups" },
+  { label: "Workflow Automations", value: "180+", detail: "Across admissions, finance, HR" },
+  { label: "Avg. Go-live", value: "6 weeks", detail: "From kickoff to first module" },
+  { label: "Languages Supported", value: "12", detail: "Localized UI + communications" }
+];
+
+const modules = [
+  {
+    title: "ERP Operations",
+    description: "Registrar, finance, HR, and reporting workbenches tailored for daily ops.",
+    href: "/portal",
+    badge: "Role-based"
+  },
+  {
+    title: "Student Hub",
+    description: "Mobile-ready dashboard for timetable, notices, results, and support.",
+    href: "/student",
+    badge: "Student-first"
+  },
+  {
+    title: "Admissions Suite",
+    description: "High-volume application processing with verification + seat allocation.",
+    href: "/admissions",
+    badge: "High volume"
+  }
+];
+
+const overviewHighlights = [
+  {
+    title: "Front-office CRM",
+    detail: "Omni-channel enquiries, SLA timers, visitor logs, and escalations."
+  },
+  {
+    title: "Finance fabric",
+    detail: "Fee plans, concessions, reconciliation, refunds, statutory filings."
+  },
+  {
+    title: "HR & payroll",
+    detail: "Onboarding, leave calendar, payroll cycles, document expiry alerts."
+  },
+  {
+    title: "Data backbone",
+    detail: "Audit trails, granular RBAC, analytics warehouse feeds, API-first design."
+  }
+];
+
+const architecture = [
+  { title: "Modular apps", detail: "Next.js frontends backed by NestJS services and event bus." },
+  { title: "Design system", detail: "Tokens/presets exported from one package shared across portals." },
+  { title: "State sync", detail: "React Query + TanStack tables enable optimistic UI and offline hints." },
+  { title: "Observability", detail: "Structured logs, tracing hooks, health dashboards built in." }
+];
+
+const timeline = [
+  { phase: "Week 1", title: "Discovery Sprint", detail: "Branding, data import strategy, success metrics." },
+  { phase: "Weeks 2-3", title: "UI Baseline", detail: "Design tokens, layouts, and mock journeys approved." },
+  { phase: "Weeks 4-5", title: "Service Wiring", detail: "APIs connected, role-based access configured." },
+  { phase: "Week 6", title: "Readiness & Launch", detail: "User acceptance, training, go-live support." }
+];
+
+const whiteLabelHighlights = [
+  { title: "Theme tokens", detail: "Swap palette/typography per institution without redeployments." },
+  { title: "Runtime branding", detail: "Upload logos, favicons, and hero imagery through CMS hooks." },
+  { title: "Locale bundles", detail: "Ship custom copy packs for regional languages from day zero." }
+];
+
+const themePresets = [
+  { name: "Metro Indigo", primary: "#4f46e5", accent: "#22d3ee" },
+  { name: "Heritage Maroon", primary: "#7c2d12", accent: "#fcd34d" },
+  { name: "Coastal Teal", primary: "#0f766e", accent: "#fac1a9" }
+];
+
+const integrations = [
+  { title: "Identity & SSO", detail: "SAML, Azure AD, Google Workspace, student OAuth flows." },
+  { title: "Payments", detail: "UPI, NetBanking, cards, offline challans with reconciliation queues." },
+  { title: "Gov. systems", detail: "NAAC/NIRF exports, DigiLocker ingestion, scholarship portals." },
+  { title: "Messaging", detail: "SMS/email/web push providers with per-tenant routing." }
+];
+
+const personas = [
+  {
+    id: "leadership",
+    label: "Leadership",
+    summary: "CIOs and principals monitor compliance, finances, and macro adoption metrics.",
+    bullets: [
+      "KPI dashboards for NAAC/NIRF, fee health, and support SLAs.",
+      "Theme packs + branding toggles to white-label multiple campuses.",
+      "Role-based audit logs for every mutation."
+    ]
+  },
+  {
+    id: "staff",
+    label: "Operations staff",
+    summary: "Registrar, finance, HR, and admissions teams need streamlined day-to-day workflows.",
+    bullets: [
+      "Two-pane AppShell with responsive sidebar for quick task switching.",
+      "Bulk import/export and verification flows with SLA badges.",
+      "Inline toasts/modals describing backend workflows before they land."
+    ]
+  },
+  {
+    id: "students",
+    label: "Students & guardians",
+    summary: "Mobile-first dashboards for schedules, fees, notices, and support interactions.",
+    bullets: [
+      "React Query caching for offline-ready timetable and ID cards.",
+      "Notification preferences per module (push/email/SMS).",
+      "Self-service ticketing with knowledge base suggestions."
+    ]
+  }
+];
 
 export default function HomePage() {
   return (
     <main className="bg-surface-50">
-      <section className="mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl flex-col gap-10 px-4 py-16 sm:px-6 sm:py-24">
+      <Reveal
+        as="section"
+        className="relative mx-auto flex min-h-[calc(100dvh-5rem)] max-w-6xl flex-col gap-10 overflow-hidden rounded-3xl px-4 py-16 sm:px-6 sm:py-24"
+      >
+        <div className="pointer-events-none absolute inset-x-1/4 top-0 h-72 rounded-full bg-primary-400/30 blur-3xl" />
         <header className="space-y-3">
           <p className="text-sm font-medium uppercase tracking-wide text-primary-600">
             College ERP Platform
@@ -19,18 +139,307 @@ export default function HomePage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
           <Link
             href="/portal"
-            className="rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300"
+            className="rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02] hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300"
           >
             Explore ERP Portal
           </Link>
           <Link
             href="/admissions"
-            className="rounded-md border border-primary-600 px-5 py-3 text-sm font-semibold text-primary-600 hover:bg-primary-50 focus:outline-none focus:ring focus:ring-primary-200"
+            className="rounded-md border border-primary-600 px-5 py-3 text-sm font-semibold text-primary-600 transition-transform duration-200 hover:scale-[1.02] hover:bg-primary-50 focus:outline-none focus:ring focus:ring-primary-200"
           >
             Admission Experience
           </Link>
         </div>
-      </section>
+
+        <div className="grid grid-cols-1 gap-4 rounded-2xl border border-primary-100 bg-white/80 p-6 shadow-lg shadow-primary-100/40 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((item) => (
+            <article
+              key={item.label}
+              className="rounded-xl border border-surface-100/70 bg-white/80 p-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-100"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">{item.label}</p>
+              <p className="mt-3 text-2xl font-semibold text-primary-700">{item.value}</p>
+              <p className="mt-1 text-sm text-surface-600">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white/80">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6">
+          <header className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Portals at a glance</p>
+            <h2 className="text-2xl font-semibold text-surface-900">Pick the workspace you want to explore</h2>
+            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
+              Each entry point ships with the UI you just previewed—no imagination required. Toggle into any module
+              and see how it behaves before backend data arrives.
+            </p>
+          </header>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {modules.map((module) => (
+              <Link
+                key={module.href}
+                href={module.href}
+                className="group rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:border-primary-200 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="text-lg font-semibold text-surface-900">{module.title}</p>
+                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
+                    {module.badge}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-surface-600">{module.description}</p>
+                <p className="mt-4 text-sm font-medium text-primary-600 group-hover:text-primary-700">
+                  Jump to {module.title.split(" ")[0]} →
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+                Persona focus
+              </p>
+              <h2 className="text-2xl font-semibold text-surface-900">
+                Tailored journeys for leadership, staff, and students
+              </h2>
+              <p className="text-sm text-surface-600 sm:text-base">
+                Toggle through the personas we design for and see the responsibilities we target in each portal.
+              </p>
+              <PersonaTabs personas={personas} />
+            </div>
+            <div className="rounded-3xl border border-dashed border-primary-200 bg-primary-50/70 p-6 shadow-inner">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary-600">Micro interactions</p>
+              <h3 className="mt-2 text-xl font-semibold text-primary-900">UI-first, backend-ready</h3>
+              <p className="mt-2 text-sm text-primary-900/80">
+                Every action—CTA, modal, hover state—already communicates intent. When backend services arrive, the
+                same UI simply swaps mocked data for live APIs, preserving the micro interactions you are previewing.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-primary-900">
+                <li>• Buttons and cards animate with subtle translation/opacity cues.</li>
+                <li>• Modals describe future workflows so stakeholders know what to expect.</li>
+                <li>• Mobile AppShell auto-closes after navigation for a frictionless feel.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-surface-50">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <div className="grid gap-8 lg:grid-cols-2">
+            <article className="rounded-3xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+                ERP overview
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-surface-900">
+                Every module modern campuses expect
+              </h2>
+              <p className="mt-3 text-sm text-surface-600 sm:text-base">
+                We built the UI/UX first so you can visualize the experience before wiring in services.
+              </p>
+              <ul className="mt-6 space-y-4">
+                {overviewHighlights.map((item) => (
+                  <li
+                    key={item.title}
+                    className="rounded-xl border border-surface-100 bg-surface-50 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+                  >
+                    <p className="text-sm font-semibold text-primary-600">{item.title}</p>
+                    <p className="mt-1 text-sm text-surface-600">{item.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article className="rounded-3xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+                Architecture DNA
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-surface-900">
+                Opinionated scaffolding for white-label partners
+              </h2>
+              <p className="mt-3 text-sm text-surface-600 sm:text-base">
+                Shared packages, multi-tenant aware APIs, and strict observability keep onboarding predictable.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {architecture.map((item) => (
+                  <li
+                    key={item.title}
+                    className="rounded-xl border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-surface-25"
+                  >
+                    <p className="text-sm font-semibold text-surface-900">{item.title}</p>
+                    <p className="text-sm text-surface-600">{item.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-surface-50">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-14 sm:px-6">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+              White-label foundation
+            </p>
+            <h2 className="text-2xl font-semibold text-surface-900">
+              Brand kits, runtime theme swaps, and localized copy packs
+            </h2>
+            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
+              Every workspace pulls its identity from design tokens—flip a switch to match any institution without
+              forking code.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <article className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+              <h3 className="text-lg font-semibold text-surface-900">Live theme presets</h3>
+              <p className="text-sm text-surface-600">
+                Swap colors, typography, and roundedness from a control panel.
+              </p>
+              <div className="mt-6">
+                <ThemePreview presets={themePresets} />
+              </div>
+            </article>
+            <article className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {whiteLabelHighlights.map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-xl border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+                  >
+                    <p className="text-sm font-semibold text-primary-600">{item.title}</p>
+                    <p className="mt-2 text-sm text-surface-600">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 rounded-xl border border-dashed border-primary-200 bg-primary-50/60 p-5 text-sm text-primary-900">
+                <strong className="font-semibold">Coming up:</strong> tenant-aware branding API so partner agencies
+                can upload assets programmatically.
+              </div>
+            </article>
+          </div>
+        </div>
+      </Reveal>
+      <Reveal
+        as="section"
+        className="bg-gradient-to-b from-primary-900 via-primary-800 to-primary-700 py-16 text-white"
+      >
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6">
+          <header className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-200">
+              Fast-track rollout
+            </p>
+            <h2 className="text-2xl font-semibold">From prototype to production in six weeks</h2>
+            <p className="max-w-3xl text-sm text-primary-100 sm:text-base">
+              Follow the same activation playbook we use with every institution.
+            </p>
+          </header>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {timeline.map((item) => (
+              <article
+                key={item.phase}
+                className="rounded-2xl border border-white/20 bg-white/10 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/20 backdrop-blur"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary-100">{item.phase}</p>
+                <p className="mt-2 text-lg font-semibold">{item.title}</p>
+                <p className="mt-1 text-sm text-primary-100">{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+              Integration surface
+            </p>
+            <h2 className="text-2xl font-semibold text-surface-900">
+              Plug into identity, payments, messaging, and compliance layers
+            </h2>
+            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
+              White-label partners reuse the same integration contract regardless of branding or tenant size.
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {integrations.map((integration) => (
+              <article
+                key={integration.title}
+                className="rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+              >
+                <p className="text-sm font-semibold text-surface-900">{integration.title}</p>
+                <p className="mt-2 text-sm text-surface-600">{integration.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+              Integration surface
+            </p>
+            <h2 className="text-2xl font-semibold text-surface-900">
+              Connect identity, payments, messaging, and compliance layers effortlessly
+            </h2>
+            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
+              White-label partners reuse the same integration contract regardless of branding or campus size.
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {integrations.map((integration) => (
+              <article
+                key={integration.title}
+                className="rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+              >
+                <p className="text-sm font-semibold text-surface-900">{integration.title}</p>
+                <p className="mt-2 text-sm text-surface-600">{integration.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="rounded-3xl border border-surface-200 bg-surface-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-12">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Preview + Sandbox</p>
+                <h3 className="text-2xl font-semibold text-surface-900">
+                  Want a guided white-label walkthrough?
+                </h3>
+                <p className="max-w-2xl text-sm text-surface-600 sm:text-base">
+                  Spin up a sandbox with mocked data, then invite your stakeholders to click around the portals you
+                  just saw. We’ll layer backend services and your branding kit only after you sign off.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/portal"
+                  className="rounded-md bg-primary-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300"
+                >
+                  Launch sandbox
+                </Link>
+                <Link
+                  href="mailto:white-label@college-erp.test?subject=White-label%20ERP%20demo"
+                  className="rounded-md border border-primary-600 px-5 py-3 text-center text-sm font-semibold text-primary-600 transition hover:bg-primary-50 focus:outline-none focus:ring focus:ring-primary-200"
+                >
+                  Request white-label kit
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Reveal>
     </main>
   );
 }

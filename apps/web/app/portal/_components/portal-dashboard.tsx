@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Modal } from "../../../components/modal";
+import { Reveal } from "../../../components/reveal";
 
 type ModalState = {
   title: string;
@@ -68,7 +69,7 @@ export function PortalDashboard() {
   return (
     <>
       <section className="flex flex-col gap-8">
-        <header className="space-y-3">
+        <Reveal as="header" className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
             Baseline workspace
           </p>
@@ -80,13 +81,13 @@ export function PortalDashboard() {
             command center. The UI reflects the minimum viable workflows before deeper backend
             integrations.
           </p>
-        </header>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Reveal as="section" className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <article
               key={item.label}
-              className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm"
+              className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">
                 {item.label}
@@ -95,10 +96,10 @@ export function PortalDashboard() {
               <p className="mt-1 text-xs text-surface-500">{item.change}</p>
             </article>
           ))}
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm lg:col-span-2">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Student Information</h3>
@@ -106,7 +107,7 @@ export function PortalDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Student Information module",
@@ -125,7 +126,7 @@ export function PortalDashboard() {
             </div>
             <ul className="mt-6 divide-y divide-surface-100">
               {studentUpdates.map((student) => (
-                <li key={student.name} className="py-4">
+                <li key={student.name} className="py-4 transition-colors duration-200 hover:bg-surface-50">
                   <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                     <div>
                       <p className="font-medium text-surface-900">{student.name}</p>
@@ -139,7 +140,7 @@ export function PortalDashboard() {
             </ul>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Finance & Fees</h3>
@@ -147,7 +148,7 @@ export function PortalDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Finance & Fees overview",
@@ -174,17 +175,20 @@ export function PortalDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {feeAlerts.map((alert) => (
-                <li key={alert.title} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={alert.title}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="font-medium text-surface-900">{alert.title}</p>
                   <p className="mt-1 text-sm text-surface-600">{alert.detail}</p>
                 </li>
               ))}
             </ul>
           </article>
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm lg:col-span-2">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Front Office Queue</h3>
@@ -194,7 +198,7 @@ export function PortalDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Front Office actions",
@@ -234,7 +238,7 @@ export function PortalDashboard() {
                 </thead>
                 <tbody className="divide-y divide-surface-100">
                   {enquiryQueue.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item.id} className="transition-colors duration-200 hover:bg-surface-50">
                       <td className="py-3 font-semibold text-surface-900">{item.id}</td>
                       <td className="py-3">{item.subject}</td>
                       <td className="py-3 text-surface-600">{item.owner}</td>
@@ -248,7 +252,7 @@ export function PortalDashboard() {
             </div>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Reporting & Compliance</h3>
@@ -256,7 +260,7 @@ export function PortalDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Reporting workspace",
@@ -283,7 +287,10 @@ export function PortalDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {complianceChecklist.map((item) => (
-                <li key={item.title} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={item.title}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="font-semibold text-surface-900">{item.title}</p>
                   <p className="text-sm text-surface-600">{item.status}</p>
                   <p className="mt-1 text-xs font-medium text-warning-700">{item.due}</p>
@@ -291,7 +298,7 @@ export function PortalDashboard() {
               ))}
             </ul>
           </article>
-        </section>
+        </Reveal>
       </section>
 
       <Modal

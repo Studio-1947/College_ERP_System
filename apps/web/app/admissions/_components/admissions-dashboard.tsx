@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Modal } from "../../../components/modal";
+import { Reveal } from "../../../components/reveal";
 
 type ModalState = {
   title: string;
@@ -88,7 +89,7 @@ export function AdmissionsDashboard() {
   return (
     <>
       <section className="flex flex-col gap-10">
-        <header className="space-y-4 text-center">
+        <Reveal as="header" className="space-y-4 text-center">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
             Admissions control center
           </p>
@@ -99,11 +100,14 @@ export function AdmissionsDashboard() {
             Visualize funnel health, verification throughput, payment status, and merit list readiness.
             This UI focuses on the baseline interactions while backend workflows are wired up.
           </p>
-        </header>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Reveal as="section" className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {pipelineStats.map((item) => (
-            <article key={item.stage} className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm">
+            <article
+              key={item.stage}
+              className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
               <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">
                 {item.stage}
               </p>
@@ -111,10 +115,10 @@ export function AdmissionsDashboard() {
               <p className="mt-1 text-xs text-surface-500">{item.change}</p>
             </article>
           ))}
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm lg:col-span-2">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Application Stages</h3>
@@ -124,7 +128,7 @@ export function AdmissionsDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Export funnel report",
@@ -152,11 +156,11 @@ export function AdmissionsDashboard() {
             </div>
             <ol className="mt-6 space-y-4">
               {applicationStages.map((stage, index) => (
-                <li key={stage.label} className="flex items-center gap-4">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-200 text-sm font-semibold text-primary-700">
+                <li key={stage.label} className="group flex items-center gap-4">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-200 text-sm font-semibold text-primary-700 transition-transform duration-300 group-hover:scale-105">
                     {index + 1}
                   </span>
-                  <div className="flex flex-1 items-center justify-between rounded-lg border border-surface-100 p-4">
+                  <div className="flex flex-1 items-center justify-between rounded-lg border border-surface-100 p-4 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary-200 group-hover:bg-surface-25">
                     <div>
                       <p className="font-semibold text-surface-900">{stage.label}</p>
                       <p className="text-sm text-surface-600">
@@ -170,7 +174,7 @@ export function AdmissionsDashboard() {
             </ol>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Verification Queue</h3>
@@ -178,7 +182,7 @@ export function AdmissionsDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Verification controls",
@@ -208,7 +212,10 @@ export function AdmissionsDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {verificationQueue.map((item) => (
-                <li key={item.applicant} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={item.applicant}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-wide text-surface-500">
@@ -226,10 +233,10 @@ export function AdmissionsDashboard() {
               ))}
             </ul>
           </article>
-        </section>
+        </Reveal>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm">
+        <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Payments & Receipts</h3>
@@ -237,7 +244,7 @@ export function AdmissionsDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Payment ledger snapshot",
@@ -261,7 +268,10 @@ export function AdmissionsDashboard() {
             </div>
             <ul className="mt-6 space-y-4">
               {paymentAlerts.map((alert) => (
-                <li key={alert.title} className="rounded-lg border border-surface-100 p-4">
+                <li
+                  key={alert.title}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="font-semibold text-surface-900">{alert.title}</p>
                   <p className="text-sm text-surface-600">{alert.detail}</p>
                   <span
@@ -284,7 +294,7 @@ export function AdmissionsDashboard() {
             </ul>
           </article>
 
-          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm lg:col-span-2">
+          <article className="rounded-xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-surface-900">Merit & Allocation Rounds</h3>
@@ -292,7 +302,7 @@ export function AdmissionsDashboard() {
               </div>
               <button
                 type="button"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700"
+                className="text-sm font-medium text-primary-600 transition-colors hover:text-primary-700"
                 onClick={() =>
                   openModal(
                     "Manage rounds",
@@ -319,7 +329,10 @@ export function AdmissionsDashboard() {
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
               {meritRounds.map((round) => (
-                <article key={round.round} className="rounded-lg border border-surface-100 p-4">
+                <article
+                  key={round.round}
+                  className="rounded-lg border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200"
+                >
                   <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">
                     {round.round}
                   </p>
@@ -344,7 +357,7 @@ export function AdmissionsDashboard() {
               ))}
             </div>
           </article>
-        </section>
+        </Reveal>
       </section>
 
       <Modal
