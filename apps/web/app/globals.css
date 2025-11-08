@@ -11,3 +11,34 @@
 body {
   @apply bg-surface-50 text-surface-900 antialiased;
 }
+
+.hero-gradient {
+  background: radial-gradient(circle at 35% 35%, rgba(99, 102, 241, 0.32), rgba(99, 102, 241, 0));
+  background-size: 160% 160%;
+  animation: heroGradientFloat 28s ease-in-out infinite;
+  will-change: background-position, opacity;
+  opacity: 0.9;
+}
+
+@keyframes heroGradientFloat {
+  0% {
+    background-position: 45% 30%;
+    opacity: 0.85;
+  }
+
+  50% {
+    background-position: 55% 70%;
+    opacity: 1;
+  }
+
+  100% {
+    background-position: 45% 30%;
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient {
+    animation: none;
+  }
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { ThemePreview } from "../../components/home/theme-preview";
 import { PersonaTabs } from "../../components/home/persona-tabs";
 import { Reveal } from "../../components/reveal";
@@ -10,7 +11,12 @@ const stats = [
   { label: "Languages Supported", value: "12", detail: "Localized UI + communications" }
 ];
 
-const modules = [
+const modules: Array<{
+  title: string;
+  description: string;
+  href: Route;
+  badge: string;
+}> = [
   {
     title: "ERP Operations",
     description: "Registrar, finance, HR, and reporting workbenches tailored for daily ops.",
@@ -123,7 +129,7 @@ export default function HomePage() {
         as="section"
         className="relative mx-auto flex min-h-[calc(100dvh-5rem)] max-w-6xl flex-col gap-10 overflow-hidden rounded-3xl px-4 py-16 sm:px-6 sm:py-24"
       >
-        <div className="pointer-events-none absolute inset-x-1/4 top-0 h-72 rounded-full bg-primary-400/30 blur-3xl" />
+        <div className="pointer-events-none hero-gradient absolute left-1/2 -top-24 h-[28rem] w-[110%] -translate-x-1/2 rounded-full blur-[140px]" />
         <header className="space-y-3">
           <p className="text-sm font-medium uppercase tracking-wide text-primary-600">
             College ERP Platform
