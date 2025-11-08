@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build -- --filter=@college-erp/web...",
+  "buildCommand": "if [ -f ../../package.json ]; then cd ../../; fi && npm run build -- --filter=@college-erp/web...",
   "installCommand": "npm install",
   "builds": [
     {
