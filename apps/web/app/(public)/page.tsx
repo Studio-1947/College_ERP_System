@@ -1,495 +1,222 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
-import { ThemePreview } from "../../components/home/theme-preview";
-import { PersonaTabs } from "../../components/home/persona-tabs";
+
 import { Reveal } from "../../components/reveal";
 
-const stats = [
-  { label: "Campuses Onboarded", value: "42+", detail: "Autonomous & multi-campus groups" },
-  { label: "Workflow Automations", value: "180+", detail: "Across admissions, finance, HR" },
-  { label: "Avg. Go-live", value: "6 weeks", detail: "From kickoff to first module" },
-  { label: "Languages Supported", value: "12", detail: "Localized UI + communications" }
-];
+const heroMedia = {
+  image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1600&q=80",
+  alt: "Students walking through the campus quadrangle"
+};
 
-const modules: Array<{
-  title: string;
-  description: string;
-  href: Route;
-  badge: string;
-}> = [
+const dynamicModules = [
   {
-    title: "ERP Operations",
-    description: "Registrar, finance, HR, and reporting workbenches tailored for daily ops.",
-    href: "/portal",
-    badge: "Role-based"
-  },
-  {
-    title: "Student Hub",
-    description: "Mobile-ready dashboard for timetable, notices, results, and support.",
-    href: "/student",
-    badge: "Student-first"
-  },
-  {
-    title: "Admissions Suite",
-    description: "High-volume application processing with verification + seat allocation.",
-    href: "/admissions",
-    badge: "High volume"
-  }
-];
-
-const overviewHighlights = [
-  {
-    title: "Front-office CRM",
-    detail: "Omni-channel enquiries, SLA timers, visitor logs, and escalations."
-  },
-  {
-    title: "Finance fabric",
-    detail: "Fee plans, concessions, reconciliation, refunds, statutory filings."
-  },
-  {
-    title: "HR & payroll",
-    detail: "Onboarding, leave calendar, payroll cycles, document expiry alerts."
-  },
-  {
-    title: "Data backbone",
-    detail: "Audit trails, granular RBAC, analytics warehouse feeds, API-first design."
-  }
-];
-
-const architecture = [
-  { title: "Modular apps", detail: "Next.js frontends backed by NestJS services and event bus." },
-  { title: "Design system", detail: "Tokens/presets exported from one package shared across portals." },
-  { title: "State sync", detail: "React Query + TanStack tables enable optimistic UI and offline hints." },
-  { title: "Observability", detail: "Structured logs, tracing hooks, health dashboards built in." }
-];
-
-const timeline = [
-  { phase: "Week 1", title: "Discovery Sprint", detail: "Branding, data import strategy, success metrics." },
-  { phase: "Weeks 2-3", title: "UI Baseline", detail: "Design tokens, layouts, and mock journeys approved." },
-  { phase: "Weeks 4-5", title: "Service Wiring", detail: "APIs connected, role-based access configured." },
-  { phase: "Week 6", title: "Readiness & Launch", detail: "User acceptance, training, go-live support." }
-];
-
-const whiteLabelHighlights = [
-  { title: "Theme tokens", detail: "Swap palette/typography per institution without redeployments." },
-  { title: "Runtime branding", detail: "Upload logos, favicons, and hero imagery through CMS hooks." },
-  { title: "Locale bundles", detail: "Ship custom copy packs for regional languages from day zero." }
-];
-
-const themePresets = [
-  { name: "Metro Indigo", primary: "#4f46e5", accent: "#22d3ee" },
-  { name: "Heritage Maroon", primary: "#7c2d12", accent: "#fcd34d" },
-  { name: "Coastal Teal", primary: "#0f766e", accent: "#fac1a9" }
-];
-
-const personas = [
-  {
-    id: "leadership",
-    label: "Leadership",
-    summary: "CIOs and principals monitor compliance, finances, and macro adoption metrics.",
-    bullets: [
-      "KPI dashboards for NAAC/NIRF, fee health, and support SLAs.",
-      "Theme packs + branding toggles to white-label multiple campuses.",
-      "Role-based audit logs for every mutation."
-    ]
-  },
-  {
-    id: "staff",
-    label: "Operations staff",
-    summary: "Registrar, finance, HR, and admissions teams need streamlined day-to-day workflows.",
-    bullets: [
-      "Two-pane AppShell with responsive sidebar for quick task switching.",
-      "Bulk import/export and verification flows with SLA badges.",
-      "Inline toasts/modals describing backend workflows before they land."
-    ]
-  },
-  {
-    id: "students",
-    label: "Students & guardians",
-    summary: "Mobile-first dashboards for schedules, fees, notices, and support interactions.",
-    bullets: [
-      "React Query caching for offline-ready timetable and ID cards.",
-      "Notification preferences per module (push/email/SMS).",
-      "Self-service ticketing with knowledge base suggestions."
-    ]
-  }
-];
-
-const campusScenes = [
-  {
-    title: "Founders' Building",
-    description: "Heritage facade with revamped signage and AR-enabled campus tours.",
-    image: "https://images.unsplash.com/photo-1464802686167-b939a6910659?auto=format&fit=crop&w=1200&q=80",
-    badge: "Campus heritage"
-  },
-  {
-    title: "Innovation Lab",
-    description: "Modern computer lab mocked up with biometric attendance and IoT dashboards.",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-    badge: "Smart infrastructure"
-  },
-  {
-    title: "Admissions Helpdesk",
-    description: "Guided onboarding desk with self-serve kiosks mirrored in the portal UI.",
-    image: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80",
-    badge: "Student-first"
-  }
-];
-
-const cmsHighlights: Array<{ title: string; detail: string; meta?: string }> = [
-  {
-    title: "Drag-and-drop hero layouts",
-    detail: "Update sliders, hero copy, and galleries without touching code."
-  },
-  {
-    title: "Role-based publishing",
-    detail: "Department heads and faculty publish notices with approval workflows."
-  },
-  {
-    title: "Multilingual ready",
-    detail: "English, Hindi, and Bengali content blocks share the same schema."
-  },
-  {
-    title: "Accessibility & compliance",
-    detail: "WCAG-friendly components with audit trails for every change."
-  }
-];
-
-const dynamicContentModules: Array<{ title: string; detail: string; meta: string }> = [
-  {
+    slug: "news-events",
     title: "News & Events",
-    detail: "Showcase seminars, conferences, and achievements with per-year filters.",
-    meta: "Admin dashboard + scheduling"
+    description: "Publish seminars, conferences, achievements, and alumni spotlights from one moderated dashboard.",
+    image: "https://images.unsplash.com/photo-1498079022511-d15614cb1c02?auto=format&fit=crop&w=900&q=80",
+    badge: "Admin tools",
+    chips: ["Scheduler", "Rich media", "Audience tags"]
   },
   {
+    slug: "notices-circulars",
     title: "Notices & Circulars",
-    detail: "Searchable board grouped by department, urgency, and attachment type.",
-    meta: "Real-time updates"
+    description: "Categorised, searchable notice board with filters by department, urgency, and academic year.",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80",
+    badge: "Always-on",
+    chips: ["Real-time updates", "Auto-expiry", "Role-based drafts"]
   },
   {
+    slug: "tender-documents",
     title: "Tender Documents",
-    detail: "Secure uploads with expiry reminders and public download history.",
-    meta: "Auto-archive"
+    description: "Secure upload, watermarking, and archival of tender notifications with audit logs.",
+    image: "https://images.unsplash.com/photo-1454165205744-3b78555e5572?auto=format&fit=crop&w=900&q=80",
+    badge: "Compliance",
+    chips: ["Version history", "Download tracking", "OTP protected"]
   },
   {
+    slug: "digital-prospectus",
     title: "Digital Prospectus",
-    detail: "Host brochures, program booklets, and admission guides in PDF.",
-    meta: "Track downloads"
+    description: "Host downloadable prospectus, program booklets, and academic brochures in PDF.",
+    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80",
+    badge: "Admissions",
+    chips: ["Multi-language", "One-click share", "Analytics"]
   },
   {
+    slug: "photo-video-gallery",
     title: "Photo & Video Gallery",
-    detail: "Department and year-wise galleries with YouTube/Vimeo embeds.",
-    meta: "Lightbox viewer"
+    description: "Year-wise and department-wise media archives with embedded YouTube/Vimeo support.",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80",
+    badge: "Media hub",
+    chips: ["Lightbox", "Tag filters", "Bulk upload"]
   },
   {
-    title: "Faculty & Staff Directory",
-    detail: "Searchable cards with designation, qualification, and contacts.",
-    meta: "Filters by department"
+    slug: "faculty-directory",
+    title: "Faculty & Staff Profiles",
+    description: "Searchable directory featuring photos, designations, qualifications, and contact details.",
+    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
+    badge: "Directory",
+    chips: ["Department filters", "Contact cards", "Download vCard"]
   },
   {
+    slug: "download-centre",
     title: "Download Centre",
-    detail: "Central home for forms, syllabi, and exam resources with tagging.",
-    meta: "Version history"
+    description: "Central repository for academic forms, syllabi, timetables, and exam-related documents.",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80",
+    badge: "Resources",
+    chips: ["Tagged PDFs", "Expiry reminders", "Bulk export"]
+  },
+  {
+    slug: "feedback-grievance",
+    title: "Feedback & Grievance",
+    description: "Secure submission flows with ticket numbers, SLA tracking, and admin moderation.",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=900&q=80",
+    badge: "Student voice",
+    chips: ["Escalations", "Auto acknowledgements", "Analytics"]
   }
 ];
 
-export default function HomePage() {
+const livePreviews = [
+  {
+    title: "Editorial workflow",
+    description: "Role-based drafting, approvals, and instant publishing keep comms compliant.",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    title: "Media grid",
+    description: "Adaptive masonry layout renders both photos and embedded videos beautifully.",
+    image: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    title: "Directory cards",
+    description: "Faculty profiles show expertise areas, office hours, and quick contact buttons.",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80"
+  }
+];
+
+const resourceLinks: Array<{ title: string; detail: string; href: Route; accent: string }> = [
+  {
+    title: "Preview CMS dashboard",
+    detail: "Walk through the exact UI Bethune staff will use to publish updates.",
+    href: "/portal",
+    accent: "Go to ERP Operations"
+  },
+  {
+    title: "Download mock prospectus",
+    detail: "See how PDFs render inside the new Digital Prospectus viewer.",
+    href: "/student",
+    accent: "Open student hub"
+  },
+  {
+    title: "Review grievance tracker",
+    detail: "Experience the ticket escalation and response timeline.",
+    href: "/portal/students",
+    accent: "View workflow"
+  }
+];
+
+const statHighlights = [
+  { label: "Live modules", value: "8", detail: "Mapped 1:1 with tender scope" },
+  { label: "CMS personas", value: "4", detail: "Admin, faculty, PR, compliance" },
+  { label: "Media items mocked", value: "120+", detail: "Photos, videos, PDFs" },
+  { label: "Localization packs", value: "3", detail: "English, Hindi, Bengali" }
+];
+
+export default function ModuleOneHomePage() {
   return (
     <main className="bg-surface-50">
       <Reveal
         as="section"
         className="relative mx-auto flex min-h-[calc(100dvh-5rem)] max-w-6xl flex-col gap-10 overflow-hidden rounded-3xl px-4 py-16 sm:px-6 sm:py-24"
       >
-        <div className="pointer-events-none hero-gradient absolute left-1/2 -top-24 h-[28rem] w-[110%] -translate-x-1/2 rounded-full blur-[140px]" />
-        <header className="space-y-3">
-          <p className="text-sm font-medium uppercase tracking-wide text-primary-600">
-            College ERP Platform
-          </p>
-          <h1 className="text-3xl font-semibold sm:text-4xl md:text-5xl">
-            Modular, white-label ERP for modern educational institutions.
-          </h1>
-          <p className="max-w-2xl text-base text-surface-600 sm:text-lg">
-            A unified platform covering dynamic college websites, office management systems, and
-            admission workflows built on scalable architecture.
-          </p>
-        </header>
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-          <Link
-            href="/portal"
-            className="rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02] hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300"
-          >
-            Explore ERP Portal
-          </Link>
-          <Link
-            href="/admissions"
-            className="rounded-md border border-primary-600 px-5 py-3 text-sm font-semibold text-primary-600 transition-transform duration-200 hover:scale-[1.02] hover:bg-primary-50 focus:outline-none focus:ring focus:ring-primary-200"
-          >
-            Admission Experience
-          </Link>
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src={heroMedia.image}
+            alt={heroMedia.alt}
+            fill
+            priority
+            className="object-cover opacity-30"
+            sizes="100vw"
+          />
         </div>
-
-        <div className="grid grid-cols-1 gap-4 rounded-2xl border border-primary-100 bg-white/80 p-6 shadow-lg shadow-primary-100/40 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((item) => (
-            <article
-              key={item.label}
-              className="rounded-xl border border-surface-100/70 bg-white/80 p-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-100"
-            >
+        <div className="space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary-600 drop-shadow">
+            Module 01 · Dynamic Website
+          </p>
+          <h1 className="text-3xl font-semibold text-surface-900 sm:text-4xl md:text-5xl">
+            Public-facing experiences that mirror Bethune College&apos;s proposal, pixel by pixel.
+          </h1>
+          <p className="max-w-3xl text-base text-surface-700 sm:text-lg">
+            Every section below is already mocked with imagery, copy, and navigation so stakeholders can browse the
+            future college website before backend integration begins.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 rounded-2xl border border-white/50 bg-white/80 p-6 shadow-lg shadow-primary-100/40 sm:grid-cols-2 lg:grid-cols-4">
+          {statHighlights.map((item) => (
+            <article key={item.label} className="rounded-xl border border-surface-100/70 bg-white/80 p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">{item.label}</p>
               <p className="mt-3 text-2xl font-semibold text-primary-700">{item.value}</p>
               <p className="mt-1 text-sm text-surface-600">{item.detail}</p>
             </article>
           ))}
         </div>
-      </Reveal>
-
-      <Reveal as="section" className="border-t border-surface-200 bg-white/80">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6">
-          <header className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Portals at a glance</p>
-            <h2 className="text-2xl font-semibold text-surface-900">Pick the workspace you want to explore</h2>
-            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              Each entry point ships with the UI you just previewed—no imagination required. Toggle into any module
-              and see how it behaves before backend data arrives.
-            </p>
-          </header>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {modules.map((module) => (
-              <Link
-                key={module.href}
-                href={module.href}
-                className="group rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:border-primary-200 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="text-lg font-semibold text-surface-900">{module.title}</p>
-                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
-                    {module.badge}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-surface-600">{module.description}</p>
-                <p className="mt-4 text-sm font-medium text-primary-600 group-hover:text-primary-700">
-                  Jump to {module.title.split(" ")[0]} →
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="border-t border-surface-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-                Persona focus
-              </p>
-              <h2 className="text-2xl font-semibold text-surface-900">
-                Tailored journeys for leadership, staff, and students
-              </h2>
-              <p className="text-sm text-surface-600 sm:text-base">
-                Toggle through the personas we design for and see the responsibilities we target in each portal.
-              </p>
-              <PersonaTabs personas={personas} />
-            </div>
-            <div className="rounded-3xl border border-dashed border-primary-200 bg-primary-50/70 p-6 shadow-inner">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary-600">Micro interactions</p>
-              <h3 className="mt-2 text-xl font-semibold text-primary-900">UI-first, backend-ready</h3>
-              <p className="mt-2 text-sm text-primary-900/80">
-                Every action—CTA, modal, hover state—already communicates intent. When backend services arrive, the
-                same UI simply swaps mocked data for live APIs, preserving the micro interactions you are previewing.
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-primary-900">
-                <li>• Buttons and cards animate with subtle translation/opacity cues.</li>
-                <li>• Modals describe future workflows so stakeholders know what to expect.</li>
-                <li>• Mobile AppShell auto-closes after navigation for a frictionless feel.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="border-t border-surface-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Relatable previews</p>
-            <h2 className="text-2xl font-semibold text-surface-900">Real-world scenes paired with the UI mocks</h2>
-            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              Each visual anchors a portal module so decision makers can map requirements from the Bethune proposal to a
-              tangible experience.
-            </p>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {campusScenes.map((scene) => (
-              <article
-                key={scene.title}
-                className="group rounded-3xl border border-surface-200 bg-surface-50 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
-              >
-                <div className="relative overflow-hidden rounded-2xl">
-                  <Image
-                    src={scene.image}
-                    alt={scene.title}
-                    width={640}
-                    height={360}
-                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
-                    className="h-48 w-full rounded-2xl object-cover transition duration-300 group-hover:scale-105"
-                    priority
-                  />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700">
-                    {scene.badge}
-                  </span>
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-surface-900">{scene.title}</h3>
-                <p className="mt-2 text-sm text-surface-600">{scene.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="border-t border-surface-200 bg-surface-50">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-2">
-            <article className="rounded-3xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-                ERP overview
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold text-surface-900">
-                Every module modern campuses expect
-              </h2>
-              <p className="mt-3 text-sm text-surface-600 sm:text-base">
-                We built the UI/UX first so you can visualize the experience before wiring in services.
-              </p>
-              <ul className="mt-6 space-y-4">
-                {overviewHighlights.map((item) => (
-                  <li
-                    key={item.title}
-                    className="rounded-xl border border-surface-100 bg-surface-50 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
-                  >
-                    <p className="text-sm font-semibold text-primary-600">{item.title}</p>
-                    <p className="mt-1 text-sm text-surface-600">{item.detail}</p>
-                  </li>
-                ))}
-              </ul>
-            </article>
-            <article className="rounded-3xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-                Architecture DNA
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold text-surface-900">
-                Opinionated scaffolding for white-label partners
-              </h2>
-              <p className="mt-3 text-sm text-surface-600 sm:text-base">
-                Shared packages, multi-tenant aware APIs, and strict observability keep onboarding predictable.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {architecture.map((item) => (
-                  <li
-                    key={item.title}
-                    className="rounded-xl border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-surface-25"
-                  >
-                    <p className="text-sm font-semibold text-surface-900">{item.title}</p>
-                    <p className="text-sm text-surface-600">{item.detail}</p>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="border-t border-surface-200 bg-surface-50">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-14 sm:px-6">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-              White-label foundation
-            </p>
-            <h2 className="text-2xl font-semibold text-surface-900">
-              Brand kits, runtime theme swaps, and localized copy packs
-            </h2>
-            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              Every workspace pulls its identity from design tokens—flip a switch to match any institution without
-              forking code.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <article className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <h3 className="text-lg font-semibold text-surface-900">Live theme presets</h3>
-              <p className="text-sm text-surface-600">
-                Swap colors, typography, and roundedness from a control panel.
-              </p>
-              <div className="mt-6">
-                <ThemePreview presets={themePresets} />
-              </div>
-            </article>
-            <article className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                {whiteLabelHighlights.map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-xl border border-surface-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
-                  >
-                    <p className="text-sm font-semibold text-primary-600">{item.title}</p>
-                    <p className="mt-2 text-sm text-surface-600">{item.detail}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 rounded-xl border border-dashed border-primary-200 bg-primary-50/60 p-5 text-sm text-primary-900">
-                <strong className="font-semibold">Coming up:</strong> tenant-aware branding API so partner agencies
-                can upload assets programmatically.
-              </div>
-            </article>
-          </div>
-        </div>
-      </Reveal>
-      <Reveal
-        as="section"
-        className="bg-gradient-to-b from-primary-900 via-primary-800 to-primary-700 py-16 text-white"
-      >
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6">
-          <header className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-200">
-              Fast-track rollout
-            </p>
-            <h2 className="text-2xl font-semibold">From prototype to production in six weeks</h2>
-            <p className="max-w-3xl text-sm text-primary-100 sm:text-base">
-              Follow the same activation playbook we use with every institution.
-            </p>
-          </header>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {timeline.map((item) => (
-              <article
-                key={item.phase}
-                className="rounded-2xl border border-white/20 bg-white/10 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/20 backdrop-blur"
-              >
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary-100">{item.phase}</p>
-                <p className="mt-2 text-lg font-semibold">{item.title}</p>
-                <p className="mt-1 text-sm text-primary-100">{item.detail}</p>
-              </article>
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/portal"
+            className="rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-400/40 transition hover:bg-primary-700"
+          >
+            Launch CMS preview
+          </Link>
+          <Link
+            href="/legacy"
+            className="rounded-full border border-primary-600 px-6 py-3 text-sm font-semibold text-primary-600 transition hover:bg-primary-50"
+          >
+            View platform overview
+          </Link>
         </div>
       </Reveal>
 
       <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-              Dynamic college website
-            </p>
-            <h2 className="text-2xl font-semibold text-surface-900">
-              CMS-first approach for Bethune's public presence
-            </h2>
+          <header className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Dynamic modules</p>
+            <h2 className="text-3xl font-semibold text-surface-900">Everything the tender lists, already visualized</h2>
             <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              Everything the proposal highlights—responsive layouts, CMS guardrails, and multilingual support—is already
-              mocked so stakeholders can click through the experience.
+              Click into any card to understand what the UI looks like, how content is organized, and what workflows are
+              available for day-one go-live.
             </p>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {cmsHighlights.map((item) => (
-              <article key={item.title} className="rounded-2xl border border-surface-200 bg-surface-50 p-5 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">{item.meta ?? "CMS"}</p>
-                <h3 className="mt-2 text-lg font-semibold text-surface-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-surface-600">{item.detail}</p>
+          </header>
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {dynamicModules.map((module) => (
+              <article
+                id={module.slug}
+                key={module.title}
+                className="group rounded-3xl border border-surface-200 bg-surface-25 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+              >
+                <div className="relative overflow-hidden rounded-2xl">
+                  <Image
+                    src={module.image}
+                    alt={module.title}
+                    width={640}
+                    height={360}
+                    sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 90vw"
+                    className="h-56 w-full rounded-2xl object-cover transition duration-300 group-hover:scale-105"
+                  />
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700">
+                    {module.badge}
+                  </span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  <h3 className="text-xl font-semibold text-surface-900">{module.title}</h3>
+                  <p className="text-sm text-surface-600">{module.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {module.chips.map((chip) => (
+                      <span key={chip} className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </article>
             ))}
           </div>
@@ -498,61 +225,103 @@ export default function HomePage() {
 
       <Reveal as="section" className="border-t border-surface-200 bg-surface-50 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-              Proposal modules
-            </p>
-            <h2 className="text-2xl font-semibold text-surface-900">
-              Dynamic sections mirrored from the tender requirements
-            </h2>
+          <header className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Visual walk-throughs</p>
+            <h2 className="text-2xl font-semibold text-surface-900">Relatable mock screens for Module 01</h2>
             <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              Each tile represents a ready-to-wire module on the public website so evaluators can validate scope during
-              demos.
+              These preview frames will evolve into live CMS pages once we wire the backend, but they already match the
+              content taxonomy and workflows Bethune College requested.
             </p>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {dynamicContentModules.map((module) => (
-              <article
-                key={module.title}
-                className="rounded-2xl border border-surface-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-surface-25"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-sm font-semibold text-surface-900">{module.title}</p>
-                  <span className="text-xs font-semibold uppercase tracking-wide text-primary-500">{module.meta}</span>
+          </header>
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {livePreviews.map((preview) => (
+              <article key={preview.title} className="rounded-2xl border border-surface-200 bg-white shadow-sm">
+                <Image
+                  src={preview.image}
+                  alt={preview.title}
+                  width={480}
+                  height={320}
+                  className="h-56 w-full rounded-t-2xl object-cover"
+                />
+                <div className="space-y-2 p-5">
+                  <h3 className="text-lg font-semibold text-surface-900">{preview.title}</h3>
+                  <p className="text-sm text-surface-600">{preview.description}</p>
                 </div>
-                <p className="mt-2 text-sm text-surface-600">{module.detail}</p>
               </article>
             ))}
           </div>
         </div>
       </Reveal>
 
-      <Reveal as="section" className="bg-white py-16">
+      <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rounded-3xl border border-surface-200 bg-surface-50 p-8 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-12">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="space-y-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Preview + Sandbox</p>
-                <h3 className="text-2xl font-semibold text-surface-900">
-                  Want a guided white-label walkthrough?
-                </h3>
-                <p className="max-w-2xl text-sm text-surface-600 sm:text-base">
-                  Spin up a sandbox with mocked data, then invite your stakeholders to click around the portals you
-                  just saw. We’ll layer backend services and your branding kit only after you sign off.
+          <div className="rounded-3xl border border-surface-200 bg-surface-25 p-8 shadow-sm sm:p-12">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Guided exploration</p>
+                <h2 className="text-2xl font-semibold text-surface-900">Jump into the live mock portals</h2>
+                <p className="text-sm text-surface-600 sm:text-base">
+                  We linked the website modules to the ERP workspaces so you can seamlessly move from public views to
+                  admin dashboards without losing context.
+                </p>
+                <ul className="space-y-4">
+                  {resourceLinks.map((resource) => (
+                    <li
+                      key={resource.title}
+                      className="rounded-2xl border border-surface-100 bg-white/90 p-5 transition hover:border-primary-200 hover:shadow-lg"
+                    >
+                      <p className="text-sm font-semibold text-primary-600">{resource.title}</p>
+                      <p className="text-sm text-surface-600">{resource.detail}</p>
+                      <Link href={resource.href} className="mt-2 inline-flex items-center text-sm font-semibold text-primary-700">
+                        {resource.accent} →
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-5 rounded-3xl border border-dashed border-primary-200 bg-primary-50/60 p-6">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary-600">Storytelling anchors</p>
+                <p className="text-sm text-primary-900">
+                  • Admin preview explains how communication, approvals, and publishing rights map to Bethune&apos;s org
+                  chart.
+                </p>
+                <p className="text-sm text-primary-900">
+                  • Student-facing views emphasise accessibility, mobile layouts, and language toggles.
+                </p>
+                <p className="text-sm text-primary-900">
+                  • Compliance callouts highlight tender-specific needs like tender archives, download logs, and OTP
+                  protection.
                 </p>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="rounded-3xl border border-surface-200 bg-primary-900 px-6 py-12 text-white sm:px-10">
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary-200">Next steps</p>
+                <h2 className="text-2xl font-semibold">Lock the website scope, then wire the APIs.</h2>
+                <p className="text-sm text-primary-100 sm:text-base">
+                  Once stakeholders approve this Module 01 walkthrough, we immediately start connecting NestJS services
+                  for content, media, and document workflows.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-end">
                 <Link
-                  href="/portal"
-                  className="rounded-md bg-primary-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-primary-700 focus:outline-none focus:ring focus:ring-primary-300"
+                  href="/portal/hr"
+                  className="rounded-md bg-white px-5 py-3 text-center text-sm font-semibold text-primary-900 transition hover:bg-primary-50"
                 >
-                  Launch sandbox
+                  Explore admin workspace
                 </Link>
                 <Link
-                  href="mailto:white-label@college-erp.test?subject=White-label%20ERP%20demo"
-                  className="rounded-md border border-primary-600 px-5 py-3 text-center text-sm font-semibold text-primary-600 transition hover:bg-primary-50 focus:outline-none focus:ring focus:ring-primary-200"
+                  href="mailto:white-label@college-erp.test?subject=Module%2001%20sign-off"
+                  className="rounded-md border border-white px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-white/10"
                 >
-                  Request white-label kit
+                  Request stakeholder demo
                 </Link>
               </div>
             </div>
