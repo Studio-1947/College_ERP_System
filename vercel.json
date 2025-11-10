@@ -1,17 +1,9 @@
 {
   "buildCommand": "if [ -f ../../package.json ]; then cd ../../; fi && npm run build -- --filter=@college-erp/web...",
-  "outputDirectory": "apps/web/.next",
   "installCommand": "npm install",
-  "builds": [
-    {
-      "src": "apps/web/next.config.mjs",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "apps/web/$1"
-    }
-  ]
+  "projectSettings": {
+    "framework": "nextjs",
+    "rootDirectory": "apps/web",
+    "outputDirectory": ".next"
+  }
 }
