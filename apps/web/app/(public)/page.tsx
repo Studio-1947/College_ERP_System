@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import { ThemePreview } from "../../components/home/theme-preview";
@@ -82,13 +83,6 @@ const themePresets = [
   { name: "Coastal Teal", primary: "#0f766e", accent: "#fac1a9" }
 ];
 
-const integrations = [
-  { title: "Identity & SSO", detail: "SAML, Azure AD, Google Workspace, student OAuth flows." },
-  { title: "Payments", detail: "UPI, NetBanking, cards, offline challans with reconciliation queues." },
-  { title: "Gov. systems", detail: "NAAC/NIRF exports, DigiLocker ingestion, scholarship portals." },
-  { title: "Messaging", detail: "SMS/email/web push providers with per-tenant routing." }
-];
-
 const personas = [
   {
     id: "leadership",
@@ -119,6 +113,84 @@ const personas = [
       "Notification preferences per module (push/email/SMS).",
       "Self-service ticketing with knowledge base suggestions."
     ]
+  }
+];
+
+const campusScenes = [
+  {
+    title: "Founders' Building",
+    description: "Heritage facade with revamped signage and AR-enabled campus tours.",
+    image: "https://images.unsplash.com/photo-1464802686167-b939a6910659?auto=format&fit=crop&w=1200&q=80",
+    badge: "Campus heritage"
+  },
+  {
+    title: "Innovation Lab",
+    description: "Modern computer lab mocked up with biometric attendance and IoT dashboards.",
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+    badge: "Smart infrastructure"
+  },
+  {
+    title: "Admissions Helpdesk",
+    description: "Guided onboarding desk with self-serve kiosks mirrored in the portal UI.",
+    image: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80",
+    badge: "Student-first"
+  }
+];
+
+const cmsHighlights: Array<{ title: string; detail: string; meta?: string }> = [
+  {
+    title: "Drag-and-drop hero layouts",
+    detail: "Update sliders, hero copy, and galleries without touching code."
+  },
+  {
+    title: "Role-based publishing",
+    detail: "Department heads and faculty publish notices with approval workflows."
+  },
+  {
+    title: "Multilingual ready",
+    detail: "English, Hindi, and Bengali content blocks share the same schema."
+  },
+  {
+    title: "Accessibility & compliance",
+    detail: "WCAG-friendly components with audit trails for every change."
+  }
+];
+
+const dynamicContentModules: Array<{ title: string; detail: string; meta: string }> = [
+  {
+    title: "News & Events",
+    detail: "Showcase seminars, conferences, and achievements with per-year filters.",
+    meta: "Admin dashboard + scheduling"
+  },
+  {
+    title: "Notices & Circulars",
+    detail: "Searchable board grouped by department, urgency, and attachment type.",
+    meta: "Real-time updates"
+  },
+  {
+    title: "Tender Documents",
+    detail: "Secure uploads with expiry reminders and public download history.",
+    meta: "Auto-archive"
+  },
+  {
+    title: "Digital Prospectus",
+    detail: "Host brochures, program booklets, and admission guides in PDF.",
+    meta: "Track downloads"
+  },
+  {
+    title: "Photo & Video Gallery",
+    detail: "Department and year-wise galleries with YouTube/Vimeo embeds.",
+    meta: "Lightbox viewer"
+  },
+  {
+    title: "Faculty & Staff Directory",
+    detail: "Searchable cards with designation, qualification, and contacts.",
+    meta: "Filters by department"
+  },
+  {
+    title: "Download Centre",
+    detail: "Central home for forms, syllabi, and exam resources with tagging.",
+    meta: "Version history"
   }
 ];
 
@@ -232,6 +304,44 @@ export default function HomePage() {
                 <li>• Mobile AppShell auto-closes after navigation for a frictionless feel.</li>
               </ul>
             </div>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="border-t border-surface-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Relatable previews</p>
+            <h2 className="text-2xl font-semibold text-surface-900">Real-world scenes paired with the UI mocks</h2>
+            <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
+              Each visual anchors a portal module so decision makers can map requirements from the Bethune proposal to a
+              tangible experience.
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {campusScenes.map((scene) => (
+              <article
+                key={scene.title}
+                className="group rounded-3xl border border-surface-200 bg-surface-50 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+              >
+                <div className="relative overflow-hidden rounded-2xl">
+                  <Image
+                    src={scene.image}
+                    alt={scene.title}
+                    width={640}
+                    height={360}
+                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
+                    className="h-48 w-full rounded-2xl object-cover transition duration-300 group-hover:scale-105"
+                    priority
+                  />
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-700">
+                    {scene.badge}
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-surface-900">{scene.title}</h3>
+                <p className="mt-2 text-sm text-surface-600">{scene.description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </Reveal>
@@ -364,50 +474,53 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-              Integration surface
+              Dynamic college website
             </p>
             <h2 className="text-2xl font-semibold text-surface-900">
-              Plug into identity, payments, messaging, and compliance layers
+              CMS-first approach for Bethune's public presence
             </h2>
             <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              White-label partners reuse the same integration contract regardless of branding or tenant size.
+              Everything the proposal highlights—responsive layouts, CMS guardrails, and multilingual support—is already
+              mocked so stakeholders can click through the experience.
             </p>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {integrations.map((integration) => (
-              <article
-                key={integration.title}
-                className="rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
-              >
-                <p className="text-sm font-semibold text-surface-900">{integration.title}</p>
-                <p className="mt-2 text-sm text-surface-600">{integration.detail}</p>
+            {cmsHighlights.map((item) => (
+              <article key={item.title} className="rounded-2xl border border-surface-200 bg-surface-50 p-5 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">{item.meta ?? "CMS"}</p>
+                <h3 className="mt-2 text-lg font-semibold text-surface-900">{item.title}</h3>
+                <p className="mt-2 text-sm text-surface-600">{item.detail}</p>
               </article>
             ))}
           </div>
         </div>
       </Reveal>
 
-      <Reveal as="section" className="border-t border-surface-200 bg-white py-16">
+      <Reveal as="section" className="border-t border-surface-200 bg-surface-50 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
-              Integration surface
+              Proposal modules
             </p>
             <h2 className="text-2xl font-semibold text-surface-900">
-              Connect identity, payments, messaging, and compliance layers effortlessly
+              Dynamic sections mirrored from the tender requirements
             </h2>
             <p className="max-w-3xl text-sm text-surface-600 sm:text-base">
-              White-label partners reuse the same integration contract regardless of branding or campus size.
+              Each tile represents a ready-to-wire module on the public website so evaluators can validate scope during
+              demos.
             </p>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {integrations.map((integration) => (
+            {dynamicContentModules.map((module) => (
               <article
-                key={integration.title}
-                className="rounded-2xl border border-surface-200 bg-surface-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-white"
+                key={module.title}
+                className="rounded-2xl border border-surface-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:bg-surface-25"
               >
-                <p className="text-sm font-semibold text-surface-900">{integration.title}</p>
-                <p className="mt-2 text-sm text-surface-600">{integration.detail}</p>
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-sm font-semibold text-surface-900">{module.title}</p>
+                  <span className="text-xs font-semibold uppercase tracking-wide text-primary-500">{module.meta}</span>
+                </div>
+                <p className="mt-2 text-sm text-surface-600">{module.detail}</p>
               </article>
             ))}
           </div>
