@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { Modal } from "../../../components/modal";
 import { Reveal } from "../../../components/reveal";
+import { useAuth } from "../../../components/auth/auth-context";
 
 type ModalState = {
   title: string;
@@ -13,6 +14,8 @@ type ModalState = {
 
 export function PortalDashboard() {
   const [modal, setModal] = useState<ModalState | null>(null);
+  const { currentAccount } = useAuth();
+  const isPrincipal = currentAccount?.role === "principal";
 
   const stats = [
     { label: "Active Students", value: "12,480", change: "+120 this week" },
@@ -55,9 +58,85 @@ export function PortalDashboard() {
   ];
 
   const complianceChecklist = [
-    { title: "NAAC AQAR 2024", status: "Draft ready • 18 sections", due: "Due 20 Nov" },
+
+    { title: "NAAC AQAR 2024", status: "Draft ready � 18 sections", due: "Due 20 Nov" },
+
     { title: "NIRF Data Pack", status: "Pending HR metrics", due: "Due 30 Nov" },
+
     { title: "Scholarship Portal Sync", status: "Last sync 2h ago", due: "Daily" }
+
+  ];
+
+
+
+  const changeDesk = [
+
+    {
+
+      id: "CC-2041",
+
+      student: "Niyati Sharma",
+
+      from: "Central Campus",
+
+      to: "North Satellite",
+
+      reason: "Guardian relocation",
+
+      status: "Awaiting registrar",
+
+      sla: "Due in 2h"
+
+    },
+
+    {
+
+      id: "CC-2042",
+
+      student: "Raghav Iyer",
+
+      from: "Durgapur Extension",
+
+      to: "Central Campus",
+
+      reason: "Research lab requirement",
+
+      status: "Principal review",
+
+      sla: "Due in 4h"
+
+    },
+
+    {
+
+      id: "CC-2043",
+
+      student: "Sahana Deb",
+
+      from: "North Satellite",
+
+      to: "Central Campus",
+
+      reason: "Hostel availability",
+
+      status: "Documents pending",
+
+      sla: "Due tomorrow"
+
+    }
+
+  ];
+
+
+
+  const campusImpact = [
+
+    { campus: "Central Campus", seatsFree: 12, seatsRequested: 5, trend: "+3 seats", status: "Stable" },
+
+    { campus: "North Satellite", seatsFree: 4, seatsRequested: 6, trend: "-2 seats", status: "Tight" },
+
+    { campus: "Durgapur Extension", seatsFree: 9, seatsRequested: 4, trend: "+1 seat", status: "Healthy" }
+
   ];
 
   const openModal = (title: string, description: string, content: ReactNode) => {
@@ -300,6 +379,172 @@ export function PortalDashboard() {
           </article>
         </Reveal>
       </section>
+
+
+
+        {isPrincipal ? (
+
+          <Reveal as="section" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+            <article className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg lg:col-span-2">
+
+              <div className="flex items-center justify-between">
+
+                <div>
+
+                  <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+
+                    Principal desk
+
+                  </p>
+
+                  <h3 className="text-lg font-semibold text-surface-900">Change-of-college approvals</h3>
+
+                  <p className="text-sm text-surface-600">Requests routed for your decision</p>
+
+                </div>
+
+                <button
+
+                  type="button"
+
+                  className="text-sm font-semibold text-primary-600 transition hover:text-primary-700"
+
+                  onClick={() =>
+
+                    openModal(
+
+                      "Principal override workflow",
+
+                      "Blueprint for how change-of-college actions will execute once services are wired.",
+
+                      <ul className="list-disc space-y-2 pl-4">
+
+                        <li>Registrar pre-check ensures eligibility and vacant seat availability.</li>
+
+                        <li>Principal approves, triggers program + hostel remapping, and notifies finance.</li>
+
+                        <li>Audit trail stores before/after campus, program, and housing allocations.</li>
+
+                      </ul>
+
+                    )
+
+                  }
+
+                >
+
+                  View workflow
+
+                </button>
+
+              </div>
+
+              <div className="mt-6 overflow-x-auto">
+
+                <table className="w-full min-w-[520px] text-left text-sm">
+
+                  <thead>
+
+                    <tr className="text-xs uppercase tracking-wide text-surface-500">
+
+                      <th className="pb-2">Request</th>
+
+                      <th className="pb-2">Student</th>
+
+                      <th className="pb-2">Route</th>
+
+                      <th className="pb-2">Reason</th>
+
+                      <th className="pb-2">SLA</th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody className="divide-y divide-surface-100">
+
+                    {changeDesk.map((entry) => (
+
+                      <tr key={entry.id} className="transition-colors hover:bg-surface-50">
+
+                        <td className="py-3 font-semibold text-surface-900">{entry.id}</td>
+
+                        <td className="py-3">
+
+                          <p className="font-medium">{entry.student}</p>
+
+                          <p className="text-xs text-surface-500">{entry.status}</p>
+
+                        </td>
+
+                        <td className="py-3 text-sm text-surface-600">
+
+                          {entry.from} -{">"} {entry.to}
+
+                        </td>
+
+                        <td className="py-3 text-sm text-surface-600">{entry.reason}</td>
+
+                        <td className="py-3 text-xs font-semibold text-primary-700">{entry.sla}</td>
+
+                      </tr>
+
+                    ))}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </article>
+
+            <article className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm">
+
+              <h3 className="text-lg font-semibold text-surface-900">Campus impact</h3>
+
+              <p className="text-sm text-surface-600">Seat pressure if approvals go through</p>
+
+              <ul className="mt-6 space-y-4">
+
+                {campusImpact.map((campus) => (
+
+                  <li key={campus.campus} className="rounded-xl border border-surface-100 p-4">
+
+                    <p className="font-semibold text-surface-900">{campus.campus}</p>
+
+                    <p className="text-sm text-surface-600">
+
+                      Free {campus.seatsFree} | Requested {campus.seatsRequested}
+
+                    </p>
+
+                    <div className="mt-2 flex items-center justify-between text-xs text-surface-500">
+
+                      <span>{campus.trend}</span>
+
+                      <span className="rounded-full bg-surface-100 px-2 py-0.5 text-[11px] font-semibold uppercase">
+
+                        {campus.status}
+
+                      </span>
+
+                    </div>
+
+                  </li>
+
+                ))}
+
+              </ul>
+
+            </article>
+
+          </Reveal>
+
+        ) : null}
+
+
 
       <Modal
         open={modal !== null}
