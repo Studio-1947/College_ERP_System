@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal } from "../../../components/modal";
 import { Reveal } from "../../../components/reveal";
+import { RoleGate } from "../../../components/auth/role-gate";
 
 type ModalView = "checklist" | "payroll" | null;
 
@@ -35,7 +36,11 @@ export default function PortalHRPage() {
   ];
 
   return (
-    <section className="flex flex-col gap-8">
+    <RoleGate
+      allowedRoles={["principal", "admin"]}
+      description="HR workspace is limited to principal and registrar admins."
+    >
+      <section className="flex flex-col gap-8">
       <Reveal as="header" className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">HR preview</p>
         <h2 className="text-3xl font-semibold text-surface-900">HR &amp; Payroll</h2>
@@ -166,6 +171,7 @@ export default function PortalHRPage() {
           statutory deductions, and bank advice ready for upload to the payment gateway.
         </p>
       </Modal>
-    </section>
+      </section>
+    </RoleGate>
   );
 }

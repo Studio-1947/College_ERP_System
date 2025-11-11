@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Modal } from "../../../components/modal";
+import { RoleGate } from "../../../components/auth/role-gate";
 
 type ModalView = "plans" | "timeline" | null;
 
@@ -33,7 +34,11 @@ export default function PortalFinancePage() {
   ];
 
   return (
-    <section className="flex flex-col gap-8">
+    <RoleGate
+      allowedRoles={["principal", "admin"]}
+      description="Finance workspace is limited to principal and registrar admins."
+    >
+      <section className="flex flex-col gap-8">
       <header className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Finance preview</p>
         <h2 className="text-3xl font-semibold text-surface-900">Finance &amp; Fees</h2>
@@ -170,6 +175,7 @@ export default function PortalFinancePage() {
           <li>Gateway settlement audit auto-runs nightly; alerts appear here.</li>
         </ol>
       </Modal>
-    </section>
+      </section>
+    </RoleGate>
   );
 }
