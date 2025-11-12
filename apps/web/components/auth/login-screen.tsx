@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useId, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
@@ -14,6 +14,11 @@ export function LoginScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const accountSelectId = useId();
+  const emailInputId = useId();
+  const passwordInputId = useId();
+  const errorMessageId = useId();
+  const passwordHintId = useId();
 
   useEffect(() => {
     if (accounts.length && !selectedAccountId) {
@@ -25,6 +30,23 @@ export function LoginScreen() {
     () => accounts.find((account) => account.id === selectedAccountId) ?? accounts[0],
     [accounts, selectedAccountId]
   );
+
+  const handleAccountChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAccountId(event.target.value);
+    setPassword("");
+    setFormError(null);
+  }, []);
+
+  const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    if (formError) {
+      setFormError(null);
+    }
+    setPassword(event.target.value);
+  }, [formError]);
+
+  const togglePasswordVisibility = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,6 +64,7 @@ export function LoginScreen() {
     login(selectedAccount.id);
     setPassword("");
     router.push(selectedAccount.home);
+    setSubmitting(false);
   };
 
   const handleLogout = () => {
@@ -95,19 +118,16 @@ export function LoginScreen() {
         >
           <div className="space-y-4">
             <div>
-              <label htmlFor="account" className="text-sm font-semibold text-surface-700">
+              <label htmlFor={accountSelectId} className="text-sm font-semibold text-surface-700">
                 Select account
               </label>
               <div className="mt-2 rounded-lg border border-surface-200">
                 <select
-                  id="account"
+                  id={accountSelectId}
                   value={selectedAccount?.id ?? ""}
-                  onChange={(event) => {
-                    setSelectedAccountId(event.target.value);
-                    setPassword("");
-                    setFormError(null);
-                  }}
+                  onChange={handleAccountChange}
                   className="w-full rounded-lg bg-transparent px-3 py-2 text-sm focus:outline-none"
+                  aria-describedby={currentAccount ? undefined : "account-helper"}
                 >
                   {accounts.map((account) => (
                     <option key={account.id} value={account.id}>
@@ -119,20 +139,22 @@ export function LoginScreen() {
             </div>
 
             <div>
-              <label htmlFor="email" className="text-sm font-semibold text-surface-700">
+              <label htmlFor={emailInputId} className="text-sm font-semibold text-surface-700">
                 Email
               </label>
               <input
-                id="email"
+                id={emailInputId}
                 type="email"
                 value={selectedAccount?.email ?? ""}
                 readOnly
+                aria-readonly="true"
+                autoComplete="off"
                 className="mt-2 w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm text-surface-600"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="text-sm font-semibold text-surface-700">
+              <label htmlFor={passwordInputId} className="text-sm font-semibold text-surface-700">
                 Password
               </label>
               <div
@@ -142,27 +164,40 @@ export function LoginScreen() {
                 )}
               >
                 <input
-                  id="password"
+                  id={passwordInputId}
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={handlePasswordChange}
                   placeholder="Enter demo password"
+                  aria-invalid={Boolean(formError)}
+                  aria-describedby={`${passwordHintId}${formError ? ` ${errorMessageId}` : ""}`}
+                  autoComplete="off"
                   className="w-full border-none bg-transparent py-2 text-sm focus:outline-none"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
+                  onClick={togglePasswordVisibility}
                   className="text-xs font-semibold uppercase tracking-wide text-primary-600"
+                  aria-pressed={showPassword}
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
               </div>
-              <p className="mt-1 text-xs text-surface-500">
+              <p id={passwordHintId} className="mt-1 text-xs text-surface-500">
                 Use the mock password shared in the documentation (e.g. Principal@123).
               </p>
             </div>
 
-            {formError ? <p className="text-sm font-semibold text-danger-600">{formError}</p> : null}
+            {formError ? (
+              <p
+                id={errorMessageId}
+                role="alert"
+                aria-live="assertive"
+                className="text-sm font-semibold text-danger-600"
+              >
+                {formError}
+              </p>
+            ) : null}
 
             <button
               type="submit"

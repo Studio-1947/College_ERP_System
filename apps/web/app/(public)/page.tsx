@@ -120,19 +120,19 @@ const campusScenes = [
   {
     title: "Founders' Building",
     description: "Heritage facade with revamped signage and AR-enabled campus tours.",
-    image: "https://images.unsplash.com/photo-1464802686167-b939a6910659?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
     badge: "Campus heritage"
   },
   {
     title: "Innovation Lab",
     description: "Modern computer lab mocked up with biometric attendance and IoT dashboards.",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0?auto=format&fit=crop&w=1200&q=80",
     badge: "Smart infrastructure"
   },
   {
     title: "Admissions Helpdesk",
     description: "Guided onboarding desk with self-serve kiosks mirrored in the portal UI.",
-    image: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1501426026826-31c667bdf23d?auto=format&fit=crop&w=1200&q=80",
     badge: "Student-first"
   }
 ];

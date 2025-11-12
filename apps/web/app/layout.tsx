@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteHeader } from "../components/site-header";
+import { SiteFooter } from "../components/site-footer";
 import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Providers>
           <SiteHeader />
           <main className="flex-1">{children}</main>
+          <SiteFooter />
         </Providers>
       </body>
     </html>

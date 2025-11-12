@@ -5,6 +5,15 @@ import type { ReactNode } from "react";
 import { Modal } from "../../../components/modal";
 import { Reveal } from "../../../components/reveal";
 import { useAuth } from "../../../components/auth/auth-context";
+import {
+  portalStats,
+  studentUpdates,
+  feeAlerts,
+  enquiryQueue,
+  complianceChecklist,
+  changeDeskRequests,
+  campusImpact
+} from "../../../data/portal";
 
 type ModalState = {
   title: string;
@@ -16,128 +25,6 @@ export function PortalDashboard() {
   const [modal, setModal] = useState<ModalState | null>(null);
   const { currentAccount } = useAuth();
   const isPrincipal = currentAccount?.role === "principal";
-
-  const stats = [
-    { label: "Active Students", value: "12,480", change: "+120 this week" },
-    { label: "Pending Approvals", value: "38", change: "Student record updates" },
-    { label: "Fee Collections (MTD)", value: "₹2.4 Cr", change: "92% of target" },
-    { label: "Open Support Tickets", value: "64", change: "Avg SLA 3h 12m" }
-  ];
-
-  const studentUpdates = [
-    {
-      name: "Amrita Joseph",
-      program: "BBA 2023",
-      action: "Profile update awaiting registrar approval",
-      time: "5 min ago"
-    },
-    {
-      name: "Prakash N.",
-      program: "MSc Physics 2022",
-      action: "Document verification completed",
-      time: "18 min ago"
-    },
-    {
-      name: "Harshita Rao",
-      program: "B.Tech CSE 2024",
-      action: "New admission converted from applicant pool",
-      time: "1 hr ago"
-    }
-  ];
-
-  const feeAlerts = [
-    { title: "Fee Plan: B.Tech 2024", detail: "Installment #2 due 12 Nov • 86% paid" },
-    { title: "Scholarship Reconciliation", detail: "Pending verification for 14 students" },
-    { title: "UPI Gateway", detail: "Reconciliation mismatch detected • Review now" }
-  ];
-
-  const enquiryQueue = [
-    { id: "FR-2045", subject: "Transcript attestation", sla: "Due in 1h", owner: "Front Office" },
-    { id: "FR-2046", subject: "Hostel fee query", sla: "Due in 3h", owner: "Finance Desk" },
-    { id: "FR-2047", subject: "Bonafide certificate", sla: "Due in 5h", owner: "Registrar" }
-  ];
-
-  const complianceChecklist = [
-
-    { title: "NAAC AQAR 2024", status: "Draft ready � 18 sections", due: "Due 20 Nov" },
-
-    { title: "NIRF Data Pack", status: "Pending HR metrics", due: "Due 30 Nov" },
-
-    { title: "Scholarship Portal Sync", status: "Last sync 2h ago", due: "Daily" }
-
-  ];
-
-
-
-  const changeDesk = [
-
-    {
-
-      id: "CC-2041",
-
-      student: "Niyati Sharma",
-
-      from: "Central Campus",
-
-      to: "North Satellite",
-
-      reason: "Guardian relocation",
-
-      status: "Awaiting registrar",
-
-      sla: "Due in 2h"
-
-    },
-
-    {
-
-      id: "CC-2042",
-
-      student: "Raghav Iyer",
-
-      from: "Durgapur Extension",
-
-      to: "Central Campus",
-
-      reason: "Research lab requirement",
-
-      status: "Principal review",
-
-      sla: "Due in 4h"
-
-    },
-
-    {
-
-      id: "CC-2043",
-
-      student: "Sahana Deb",
-
-      from: "North Satellite",
-
-      to: "Central Campus",
-
-      reason: "Hostel availability",
-
-      status: "Documents pending",
-
-      sla: "Due tomorrow"
-
-    }
-
-  ];
-
-
-
-  const campusImpact = [
-
-    { campus: "Central Campus", seatsFree: 12, seatsRequested: 5, trend: "+3 seats", status: "Stable" },
-
-    { campus: "North Satellite", seatsFree: 4, seatsRequested: 6, trend: "-2 seats", status: "Tight" },
-
-    { campus: "Durgapur Extension", seatsFree: 9, seatsRequested: 4, trend: "+1 seat", status: "Healthy" }
-
-  ];
 
   const openModal = (title: string, description: string, content: ReactNode) => {
     setModal({ title, description, content });
@@ -163,7 +50,7 @@ export function PortalDashboard() {
         </Reveal>
 
         <Reveal as="section" className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((item) => (
+          {portalStats.map((item) => (
             <article
               key={item.label}
               className="rounded-xl border border-surface-200 bg-white p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -464,7 +351,7 @@ export function PortalDashboard() {
 
                   <tbody className="divide-y divide-surface-100">
 
-                    {changeDesk.map((entry) => (
+                    {changeDeskRequests.map((entry) => (
 
                       <tr key={entry.id} className="transition-colors hover:bg-surface-50">
 
