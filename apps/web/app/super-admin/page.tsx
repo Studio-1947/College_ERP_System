@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import type { Route } from "next";
 import { useMemo, useState } from "react";
 import { Modal } from "../../components/modal";
 import { Reveal } from "../../components/reveal";
@@ -192,6 +194,134 @@ const watchers = [
   }
 ];
 
+interface PortalSurface {
+  id: string;
+  title: string;
+  description: string;
+  href: Route;
+  controls: string[];
+  status: string;
+}
+
+interface ControlDeck {
+  id: string;
+  title: string;
+  description: string;
+  capabilities: string[];
+  surface: string;
+}
+
+const portalSurfaces: PortalSurface[] = [
+  {
+    id: "erp",
+    title: "ERP Operations",
+    description: "Registrar + finance workspace with every module toggle mirrored here.",
+    href: "/portal",
+    controls: ["Bulk edit modules", "Override SLAs", "Delete stale queues"],
+    status: "Live"
+  },
+  {
+    id: "admissions",
+    title: "Admissions Suite",
+    description: "Application intake, verification, and merit logic governed centrally.",
+    href: "/admissions",
+    controls: ["Edit form schemas", "Publish merit lists", "Re-run seat matrix"],
+    status: "Updates in prep"
+  },
+  {
+    id: "student",
+    title: "Student Hub",
+    description: "Announcements, timetable, and ticketing pipelines inherit settings here.",
+    href: "/student",
+    controls: ["Post notices", "Delete tickets", "Swap dashboard layouts"],
+    status: "Synced"
+  }
+];
+
+const controlDecks: ControlDeck[] = [
+  {
+    id: "admissions-controls",
+    title: "Admissions control",
+    description: "Configure forms, seats, and onboarding scripts.",
+    capabilities: ["Edit + publish forms", "Delete duplicate applicants", "Approve seat shifts"],
+    surface: "Admissions"
+  },
+  {
+    id: "erp-controls",
+    title: "ERP master control",
+    description: "Finance, HR, hostel, and infra toggles.",
+    capabilities: ["Adjust fee templates", "Delete master data", "Pause workflows"],
+    surface: "ERP Portal"
+  },
+  {
+    id: "student-controls",
+    title: "Student portal control",
+    description: "Everything students see originates here.",
+    capabilities: ["Update dashboards", "Moderate tickets", "Publish alerts"],
+    surface: "Student Hub"
+  }
+];
+
+interface CmsChannel {
+  id: string;
+  title: string;
+  scope: string;
+  actions: string[];
+  route: Route;
+  status: string;
+}
+
+const cmsChannels: CmsChannel[] = [
+  {
+    id: "cms-notices",
+    title: "Notices & Circulars",
+    scope: "Admissions · Academics",
+    actions: ["Publish instantly", "Schedule", "Attach docs"],
+    route: "/portal",
+    status: "Live"
+  },
+  {
+    id: "cms-news",
+    title: "News & Events",
+    scope: "Seminars · Achievements",
+    actions: ["Create gallery", "Embed video", "Push to home"],
+    route: "/portal",
+    status: "Queued"
+  },
+  {
+    id: "cms-tenders",
+    title: "Tenders & Downloads",
+    scope: "Infrastructure · Procurement",
+    actions: ["Upload secure PDF", "Set expiry", "Auto archive"],
+    route: "/super-admin",
+    status: "Live"
+  }
+];
+
+const publishingQueues = [
+  {
+    id: "PQ-2201",
+    title: "Prospectus 2025 update",
+    owner: "Admissions CMS",
+    due: "Today, 5 PM",
+    type: "Digital Prospectus"
+  },
+  {
+    id: "PQ-2202",
+    title: "Research summit highlights",
+    owner: "News desk",
+    due: "Tomorrow",
+    type: "News & Events"
+  },
+  {
+    id: "PQ-2203",
+    title: "Tender addendum upload",
+    owner: "Infra admin",
+    due: "Within 24h",
+    type: "Tender Document"
+  }
+];
+
 export default function SuperAdminPage() {
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [modalPayload, setModalPayload] = useState<QuickAction | null>(null);
@@ -272,6 +402,132 @@ export default function SuperAdminPage() {
             <p className="mt-1 text-xs text-surface-500">{stat.detail}</p>
           </article>
         ))}
+      </Reveal>
+
+      <Reveal as="section" className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {portalSurfaces.map((surface) => (
+          <article
+            key={surface.id}
+            className="flex flex-col rounded-2xl border border-surface-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div className="flex items-center justify-between text-xs uppercase tracking-wide text-surface-500">
+              <span>{surface.status}</span>
+              <span className="rounded-full bg-primary-50 px-2 py-0.5 text-[10px] font-semibold text-primary-600">
+                Full access
+              </span>
+            </div>
+            <h3 className="mt-3 text-xl font-semibold text-surface-900">{surface.title}</h3>
+            <p className="mt-2 text-sm text-surface-600">{surface.description}</p>
+            <ul className="mt-4 space-y-1 text-sm text-surface-600">
+              {surface.controls.map((control) => (
+                <li key={control} className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary-400" />
+                  <span>{control}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={surface.href}
+              className="mt-auto inline-flex items-center justify-center rounded-lg border border-primary-100 bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-500"
+            >
+              Open surface
+            </Link>
+          </article>
+        ))}
+      </Reveal>
+
+      <Reveal as="section" className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">Global deck</p>
+            <h3 className="text-2xl font-semibold text-surface-900">Control every portal from here</h3>
+            <p className="text-sm text-surface-600">
+              Edit, delete, and reconfigure modules; changes propagate to their respective portals instantly.
+            </p>
+          </div>
+          <span className="rounded-full bg-surface-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-surface-600">
+            Master switchboard
+          </span>
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {controlDecks.map((deck) => (
+            <article key={deck.id} className="rounded-xl border border-surface-100 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-surface-500">{deck.surface}</p>
+              <h4 className="mt-2 text-lg font-semibold text-surface-900">{deck.title}</h4>
+              <p className="mt-1 text-sm text-surface-600">{deck.description}</p>
+              <ul className="mt-3 space-y-1 text-sm text-surface-600">
+                {deck.capabilities.map((cap) => (
+                  <li key={cap} className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary-400" />
+                    <span>{cap}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+              CMS & publishing hub
+            </p>
+            <h3 className="text-2xl font-semibold text-surface-900">Notices, events, tenders, downloads</h3>
+            <p className="text-sm text-surface-600">
+              Department heads push updates without touching code. Every action inherits super admin permissions.
+            </p>
+          </div>
+          <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-600">
+            Role-based access
+          </span>
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {cmsChannels.map((channel) => (
+            <article key={channel.id} className="rounded-xl border border-surface-100 p-4">
+              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-surface-500">
+                <span>{channel.scope}</span>
+                <span className="text-primary-600">{channel.status}</span>
+              </div>
+              <h4 className="mt-2 text-lg font-semibold text-surface-900">{channel.title}</h4>
+              <ul className="mt-3 space-y-1 text-sm text-surface-600">
+                {channel.actions.map((action) => (
+                  <li key={action} className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary-400" />
+                    <span>{action}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={channel.route}
+                className="mt-4 inline-flex items-center justify-center rounded-lg border border-primary-100 bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary-500"
+              >
+                Open module
+              </Link>
+            </article>
+          ))}
+        </div>
+        <div className="mt-6 rounded-2xl border border-dashed border-surface-200 p-4">
+          <h4 className="text-sm font-semibold text-surface-900">Publishing queue</h4>
+          <p className="text-xs text-surface-500">Auto-escalates to super admin when nearing SLA.</p>
+          <ul className="mt-3 space-y-2 text-sm text-surface-700">
+            {publishingQueues.map((queue) => (
+              <li key={queue.id} className="rounded-xl border border-surface-100 bg-white p-3">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-surface-900">{queue.title}</p>
+                  <span className="text-xs font-semibold uppercase tracking-wide text-primary-500">
+                    {queue.type}
+                  </span>
+                </div>
+                <p className="text-xs text-surface-500">
+                  {queue.id} · {queue.owner}
+                </p>
+                <p className="text-xs text-surface-500">Due {queue.due}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Reveal>
 
       <Reveal as="section" className="rounded-2xl border border-surface-200 bg-white p-6 shadow-sm">

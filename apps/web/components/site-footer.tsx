@@ -126,9 +126,14 @@ export function SiteFooter() {
           <p>{"\u00A9"} {year} College ERP. All rights reserved.</p>
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="flex gap-4 text-sm">
-              <Link className="transition hover:text-primary-600" href={"/admissions"}>
+              <a
+                className="transition hover:text-primary-600"
+                href="https://github.com/example/college-erp/tree/main/docs"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Documentation
-              </Link>
+              </a>
               <Link className="transition hover:text-primary-600" href="/login">
                 Demo access
               </Link>
